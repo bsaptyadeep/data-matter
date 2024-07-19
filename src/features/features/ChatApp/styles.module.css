@@ -1,0 +1,107 @@
+.chatAppContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.navigationPanel {
+    background-color: rgb(26 26 26);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navigateMenuIcon {
+    padding: 10px;
+    color: aliceblue;
+}
+
+.navigationPanelExpand {
+    width: 300px;
+    align-items: flex-start;
+}
+
+.chatContentContainer {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+}
+
+.inputPromptContainer {
+    width: 60%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 20px;
+    background-color: rgb(26 26 26);
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+}
+
+.inputPromptContainer textarea {
+    flex: 1;
+    margin-right: 10px;
+    outline: none;
+    border: none;
+    background-color: rgb(26 26 26);
+    color: #ae99ff;
+}
+
+.sendPromptButton {
+    background-color: #ffffff;
+    color: #ae99ff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-weight: 700;
+}
+
+.sendPromptButton:hover {
+    cursor: pointer;
+}
+
+.sendPromptButton:hover {
+    cursor: pointer;
+}
+
+.userResponseContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.userMessageBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.userMessageBoxContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    padding: 30px 40px;
+    color: #ffffff;
+}
+
+.chatContent {
+    flex: 1;
+    width: 70%;
+    overflow-y: auto;
+}
+
+.loaderContainer {
+    height: 50px;
+    width: 50px;
+    padding-left: 50px;
+}
+
+.sendBtnContent {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}

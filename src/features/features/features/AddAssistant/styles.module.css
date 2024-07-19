@@ -1,0 +1,81 @@
+.addAssistantHeadingIcon {
+    color: rgb(48, 48, 48);
+}
+
+.addAssistantHeading {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #9500ff;
+    border-radius: 3px;
+    height: 60px;
+}
+
+.addAssistantHeadingLeft {
+    color: rgb(48, 48, 48);
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1;
+}
+
+.addAssistantContainer {
+    padding: 10px 23px;
+}
+
+.addAssistantFormContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.addAssistantFormContainer input,
+select {
+    outline: none;
+    font-size: 16px;
+    border: 2px solid rgb(107, 107, 107);
+    color: white;
+    background-color: #121212;
+    border-radius: 5px;
+    padding: 10px 20px;
+    width: 70%;
+}
+
+.addAssistantInputWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #ffffff;
+}
+
+.nextButton {
+    background-color: #ab8cff;
+    color: #ffffff;
+    font-weight: 500;
+    width: 100px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    margin-right: 10px;
+}
+
+.nextButton:hover {
+    cursor: pointer;
+}
+
+.error {
+    color: #ff0000;
+    font-size: 15px;
+    margin-bottom: 0px;
+    padding: 5px 10px;
+    background: #ff9999;
+    font-weight: 500;
+    border: 1px solid;
+    border-radius: 4px;
+}

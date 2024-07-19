@@ -1,0 +1,20 @@
+.selectTableContainer {
+    background: #191919;
+    width: 365px;
+    padding: 14px;
+    border-radius: 11px;
+}
+
+.selectTableContainerRow {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.selectTableContainerParent{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

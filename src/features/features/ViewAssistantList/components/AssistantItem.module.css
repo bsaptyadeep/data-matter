@@ -1,0 +1,53 @@
+.assistantListItem {
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.assistantListItemContainer {
+    background-color: #4B4B4B;
+    padding: 0px 40px;
+    border-radius: 5px;
+    color: #ffffff;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.assistantItemLeft h3 {
+    font-size: 18;
+    font-weight: 600;
+}
+
+.assistantItemExpandIcon {
+    color: #ffffff;
+}
+
+.assistantItemButton {
+    padding: 6px 20px;
+    font-weight: 600;
+    color: #303030;
+    background-color: #b089ff;
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    height: fit-content;
+}
+
+.assistantItemButton:hover {
+    cursor: pointer;
+}
+
+.assistantItemRight {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.assistantItemDescription {
+    padding-bottom: 30px;
+}

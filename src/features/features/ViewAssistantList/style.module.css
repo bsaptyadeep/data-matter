@@ -1,0 +1,23 @@
+.viewAssistantListContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 50px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.addAssistantButton {
+    background-color: #b593ff;
+    color: #525252;
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    font-weight: 500;
+}
+
+.addAssistantButton:hover {
+    cursor: pointer;
+}

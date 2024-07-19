@@ -1,0 +1,23 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+:root {
+  --grey-background: #353535;
+}
+
+.application {
+  background-color: var(--grey-background);
+}
+
+.applicationHeader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.applicationHeader img {
+  padding: 10px
+}
