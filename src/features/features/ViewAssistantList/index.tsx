@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { IAssistant } from '../../Data';
 import AssistantItem from './components/AssistantItem';
+import { SERVER_BASE_URL } from '../../../constants';
 
 const ViewAssistantList = () => {
     const navigate = useNavigate()
@@ -20,7 +21,7 @@ const ViewAssistantList = () => {
     useEffect(() => {
         const fetchAssistantList = async () => {
             try {
-                const apiResponse = await axios.get("http://localhost:8000/assistant/")
+                const apiResponse = await axios.get(`${SERVER_BASE_URL}/assistant/`)
                 if (apiResponse.data.assistant?.length > 0) {
                     setAssistantList([...apiResponse.data.assistant])
                 }

@@ -8,6 +8,7 @@ import Loader from '../../../assets/loader.json';
 import Lottie from 'lottie-react';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
+import { SERVER_BASE_URL } from '../../../constants';
 
 interface IChatResponse {
     _id: string,
@@ -43,7 +44,7 @@ const ChatApp = () => {
             setFetchingChatResponse(true)
             setQueryQuestionGettingProcess(userMessage)
             setUserMessage("")
-            const apiResponse = await axios.post(`http://localhost:8000/respond_query?assistant_id=${assistantId}&query=${userMessage}`)
+            const apiResponse = await axios.post(`${SERVER_BASE_URL}/respond_query?assistant_id=${assistantId}&query=${userMessage}`)
             setChatContent(prevState => {
                 return [
                     ...prevState,

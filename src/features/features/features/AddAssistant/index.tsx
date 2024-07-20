@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import SelectTableAccess from './components/SelectTableAccess';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { SERVER_BASE_URL } from '../../../../constants';
 
 type databaseType = "postgresql"
 type modelType = "gpt-3.5"
@@ -81,7 +82,7 @@ const AddAssistant = () => {
         connection_string: addAssistantFormData.connectionString,
         database_type: addAssistantFormData.databaseType
       }
-      const apiResponse = await axios.post(`http://localhost:8000/assistant`, reqBody)
+      const apiResponse = await axios.post(`${SERVER_BASE_URL}/assistant`, reqBody)
       if (apiResponse.data?.id) {
         await updateQueryParam("assistant-id", apiResponse.data?.id)
         setAssistantId(apiResponse.data?.id)
@@ -103,7 +104,7 @@ const AddAssistant = () => {
         id: assistantId,
         tables: tables.filter(table => table.selected).map(table => table.name)
       }
-      await axios.put(`http://localhost:8000/assistant`, reqBody)
+      await axios.put(`${SERVER_BASE_URL}/assistant`, reqBody)
       navigate(`/chat?assistant_id=${assistantId}`)
     } catch (error) {
       setError("Error Occured! Please try again after sometime")
@@ -125,7 +126,7 @@ const AddAssistant = () => {
   useEffect(() => {
     const fetchTables = async () => {
       try {
-        const apiResponse = await axios.get(`http://localhost:8000/assistant/table?id=${assistantId}`)
+        const apiResponse = await axios.get(`${SERVER_BASE_URL}/assistant/table?id=${assistantId}`)
         if (apiResponse.data.tables) {
           const tablesArray: ITable[] = []
           const tableNames: string[] = apiResponse.data.tables
