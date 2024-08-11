@@ -2,10 +2,10 @@ import { Box, CircularProgress, IconButton, Typography } from '@mui/material'
 import css from './styles.module.css';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import SelectTableAccess from './components/SelectTableAccess';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { SERVER_BASE_URL } from '../../../../constants';
+import { apiClient } from '../../../../utils/apiHandler';
 
 type databaseType = "postgresql"
 type modelType = "gpt-3.5"
@@ -82,10 +82,10 @@ const AddAssistant = () => {
         connection_string: addAssistantFormData.connectionString,
         database_type: addAssistantFormData.databaseType
       }
-      const apiResponse = await axios.post(`${SERVER_BASE_URL}/assistant`, reqBody)
-      if (apiResponse.data?.id) {
-        await updateQueryParam("assistant-id", apiResponse.data?.id)
-        setAssistantId(apiResponse.data?.id)
+      const apiResponse = await apiClient("POST", "/assistant", reqBody)
+      if (apiResponse?.id) {
+        updateQueryParam("assistant-id", apiResponse.id)
+        setAssistantId(apiResponse.id)
       }
     } catch (error) {
       setError("Invalid Connection String, Try Again")
@@ -104,7 +104,7 @@ const AddAssistant = () => {
         id: assistantId,
         tables: tables.filter(table => table.selected).map(table => table.name)
       }
-      await axios.put(`${SERVER_BASE_URL}/assistant`, reqBody)
+      await apiClient("PUT", "/assistant", reqBody)
       navigate(`/chat?assistant_id=${assistantId}`)
     } catch (error) {
       setError("Error Occured! Please try again after sometime")
@@ -126,10 +126,14 @@ const AddAssistant = () => {
   useEffect(() => {
     const fetchTables = async () => {
       try {
-        const apiResponse = await axios.get(`${SERVER_BASE_URL}/assistant/table?id=${assistantId}`)
-        if (apiResponse.data.tables) {
+        const apiResponse = await apiClient(
+          "GET",
+          `/assistant/table?id=${assistantId}`,
+          {}
+        )
+        if (apiResponse.tables) {
           const tablesArray: ITable[] = []
-          const tableNames: string[] = apiResponse.data.tables
+          const tableNames: string[] = apiResponse.tables
           tableNames.forEach((tableName: string) => {
             tablesArray.push({
               name: tableName,
@@ -151,8 +155,6 @@ const AddAssistant = () => {
       fetchTables()
     }
   }, [assistantId])
-
-  console.log("testing~tables", tables)
 
   return (
     <Box style={{ height: window.innerHeight }}>

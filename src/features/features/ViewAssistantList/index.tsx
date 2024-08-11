@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import css from './style.module.css';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { IAssistant } from '../../Data';
 import AssistantItem from './components/AssistantItem';
 import { SERVER_BASE_URL } from '../../../constants';
+import { apiClient } from '../../../utils/apiHandler';
 
 const ViewAssistantList = () => {
     const navigate = useNavigate()
@@ -21,9 +21,9 @@ const ViewAssistantList = () => {
     useEffect(() => {
         const fetchAssistantList = async () => {
             try {
-                const apiResponse = await axios.get(`${SERVER_BASE_URL}/assistant/`)
-                if (apiResponse.data.assistant?.length > 0) {
-                    setAssistantList([...apiResponse.data.assistant])
+                const apiResponse = await apiClient("GET", "/assistant", {})
+                if (apiResponse.assistant?.length > 0) {
+                    setAssistantList([...apiResponse.assistant])
                 }
             } catch (error) {
 

@@ -21,7 +21,7 @@ const SelectTableAccess = (props: IProps) => {
                 {
                     props.tables.map((table, index) => {
                         return (
-                            <Box className={css.selectTableContainerRow}>
+                            <Box key={`table-name-${table.name}`} className={css.selectTableContainerRow}>
                                 <IconButton>
                                     <Checkbox
                                         value={table.selected}

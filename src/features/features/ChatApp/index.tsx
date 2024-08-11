@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import css from './styles.module.css';
 import { Box, IconButton, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import axios from 'axios';
 import Icon from '../../../assets/icon.png';
 import Loader from '../../../assets/loader.json';
 import Lottie from 'lottie-react';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
-import { SERVER_BASE_URL } from '../../../constants';
+import { apiClient } from '../../../utils/apiHandler';
 
 interface IChatResponse {
     _id: string,
@@ -44,13 +43,13 @@ const ChatApp = () => {
             setFetchingChatResponse(true)
             setQueryQuestionGettingProcess(userMessage)
             setUserMessage("")
-            const apiResponse = await axios.post(`${SERVER_BASE_URL}/respond_query?assistant_id=${assistantId}&query=${userMessage}`)
+            const apiResponse = await apiClient("POST", `/respond_query?assistant_id=${assistantId}&query=${userMessage}`, {})
             setChatContent(prevState => {
                 return [
                     ...prevState,
                     {
                         _id: `id-${prevState.length}`,
-                        ...apiResponse.data.chat_content
+                        ...apiResponse.chat_content
                     }
                 ]
             })
