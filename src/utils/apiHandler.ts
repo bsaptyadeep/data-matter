@@ -1,12 +1,13 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { SERVER_BASE_URL } from '../constants';
 
-interface ApiResponse<T> {
-    data: T;
-}
+// interface ApiResponse<T> {
+//     data: T;
+// }
 
 interface ApiError {
     message: string;
+    detail?: string
 }
 
 const access_token = localStorage.getItem('access_token');
@@ -28,6 +29,7 @@ export const apiClient = async (method: string, endPoint: string, data: any) => 
             // Handle AxiosError
             const apiError: ApiError = {
                 message: error.message,
+                detail: error.response?.data.detail
             };
             return apiError;
         } else {

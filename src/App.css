@@ -5,19 +5,10 @@
 
 :root {
   --grey-background: #353535;
+  --purple: #b089ff;
+  --red-delete: #ff5959;
 }
 
 .application {
   background-color: var(--grey-background);
-}
-
-.applicationHeader {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  flex-direction: row;
-}
-
-.applicationHeader img {
-  padding: 10px
 }

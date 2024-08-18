@@ -24,13 +24,19 @@
 
 .assistantItemExpandIcon {
     color: #ffffff;
+    z-index: 10;
+}
+
+.assistantItemDeleteIcon {
+    color: var(--red-delete);
+    z-index: 10;
 }
 
 .assistantItemButton {
     padding: 6px 20px;
     font-weight: 600;
     color: #303030;
-    background-color: #b089ff;
+    background-color: var(--purple);
     outline: none;
     border: none;
     border-radius: 2px;

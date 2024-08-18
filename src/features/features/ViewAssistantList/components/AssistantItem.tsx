@@ -1,17 +1,32 @@
-import { IconButton } from '@mui/material'
-import React, { useState } from 'react'
+import { CircularProgress, IconButton } from '@mui/material'
+import { useState } from 'react'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import css from './AssistantItem.module.css';
 import { IAssistant } from '../../../Data';
 import { useNavigate } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { apiClient } from '../../../../utils/apiHandler';
 
 interface IProps {
-    assistant: IAssistant
+    assistant: IAssistant,
+    fetchAssistantList: () => Promise<void>
 }
 
 const AssistantItem = (props: IProps) => {
     const navigate = useNavigate()
     const [isExpandedView, setIsExpandedView] = useState<boolean>(false)
+    const [isDeletingAssistant, setIsDeletingAssistant] = useState<boolean>(false)
+
+    const handleDeleteAssistant = async () => {
+        try {
+            setIsDeletingAssistant(true)
+            await apiClient("DELETE", `/assistant/${props.assistant._id}`, {})
+            await props.fetchAssistantList()
+            setIsDeletingAssistant(false)
+        } catch (error) {
+            alert(`Failed to delete the Assistant ${props.assistant.name}: ${error}`)
+        }
+    }
 
     return (
         <div className={css.assistantListItemContainer}>
@@ -34,6 +49,14 @@ const AssistantItem = (props: IProps) => {
                             setIsExpandedView(prevState => !prevState)
                         }}>
                         <ExpandMoreIcon className={css.assistantItemExpandIcon} />
+                    </IconButton>
+                    <IconButton onClick={handleDeleteAssistant}>
+                        {
+                            isDeletingAssistant ?
+                                <CircularProgress style={{ width: 16, height: 16 }} />
+                                :
+                                <DeleteIcon className={css.assistantItemDeleteIcon} />
+                        }
                     </IconButton>
                 </div>
             </div>

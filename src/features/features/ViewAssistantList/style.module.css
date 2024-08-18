@@ -9,13 +9,13 @@
 }
 
 .addAssistantButton {
-    background-color: #b593ff;
-    color: #525252;
+    background-color: transparent;
+    border: 1px solid var(--purple);
+    color: var(--purple);
     padding: 10px;
     outline: none;
-    border: none;
-    border-radius: 2px;
-    font-weight: 500;
+    border-radius: 4px;
+    font-weight: 400;
 }
 
 .addAssistantButton:hover {

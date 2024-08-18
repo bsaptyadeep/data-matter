@@ -3,8 +3,8 @@ import css from './style.module.css';
 import { useNavigate } from 'react-router-dom';
 import { IAssistant } from '../../Data';
 import AssistantItem from './components/AssistantItem';
-import { SERVER_BASE_URL } from '../../../constants';
 import { apiClient } from '../../../utils/apiHandler';
+import Navbar from '../Navbar';
 
 const ViewAssistantList = () => {
     const navigate = useNavigate()
@@ -17,39 +17,45 @@ const ViewAssistantList = () => {
         }
     }, [navigate])
 
+    const fetchAssistantList = async () => {
+        try {
+            const apiResponse = await apiClient("GET", "/assistant", {})
+            if (apiResponse.assistant?.length > 0) {
+                setAssistantList([...apiResponse.assistant])
+            }
+        } catch (error) {
+
+        }
+    }
 
     useEffect(() => {
-        const fetchAssistantList = async () => {
-            try {
-                const apiResponse = await apiClient("GET", "/assistant", {})
-                if (apiResponse.assistant?.length > 0) {
-                    setAssistantList([...apiResponse.assistant])
-                }
-            } catch (error) {
-
-            }
-        }
         fetchAssistantList()
     }, [])
 
     return (
-        <div className={css.viewAssistantListContainer}>
-            <button
-                onClick={() => {
-                    navigate("/add-assistant")
-                }}
-                className={`${css.addAssistantButton}`}>
-                Add New Assistant
-            </button>
-            {
-                assistantList.map((assistant) => {
-                    return (
-                        <AssistantItem
-                            assistant={assistant} />
-                    )
-                })
-            }
-        </div>
+        <>
+            <Navbar>
+                <button
+                    onClick={() => {
+                        navigate("/add-assistant")
+                    }}
+                    className={`${css.addAssistantButton}`}>
+                    Add New Assistant
+                </button>
+            </Navbar>
+            <div className={css.viewAssistantListContainer}>
+                {
+                    assistantList.map((assistant) => {
+                        return (
+                            <AssistantItem key={assistant._id}
+                                assistant={assistant}
+                                fetchAssistantList={fetchAssistantList} />
+                        )
+                    })
+                }
+            </div>
+        </>
+
     )
 }
 

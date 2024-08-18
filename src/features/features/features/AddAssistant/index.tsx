@@ -4,7 +4,6 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useEffect, useState } from 'react';
 import SelectTableAccess from './components/SelectTableAccess';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { SERVER_BASE_URL } from '../../../../constants';
 import { apiClient } from '../../../../utils/apiHandler';
 
 type databaseType = "postgresql"
@@ -86,6 +85,12 @@ const AddAssistant = () => {
       if (apiResponse?.id) {
         updateQueryParam("assistant-id", apiResponse.id)
         setAssistantId(apiResponse.id)
+      }
+      else {
+        setError("Invalid Connection String, Try Again")
+        setTimeout(() => {
+          setError("")
+        }, 5000)
       }
     } catch (error) {
       setError("Invalid Connection String, Try Again")

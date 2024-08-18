@@ -1,0 +1,33 @@
+.navbarLogo {
+    width: 15rem;
+}
+
+.navbarUserPic {
+    width: 2.5rem;
+    border-radius: 3rem;
+}
+
+.navbar,
+.navUserDetails {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--purple);
+    padding-right: 0.5rem;
+}
+
+.navbar {
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #37305f;
+}
+
+.navUserDetails {
+    gap: 1rem;
+}
