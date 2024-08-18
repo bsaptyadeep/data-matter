@@ -28,7 +28,6 @@ const Navbar = (props: IProps) => {
     return (
         <Box className={css.navbar}>
             <img className={css.navbarLogo} src={DataMavenAILogo} alt="data maven ai logo" />
-
             {
                 user &&
                 <Box className={css.navUserDetails}>
