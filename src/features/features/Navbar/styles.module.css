@@ -2,6 +2,14 @@
     width: 15rem;
 }
 
+.navbarMobileLogo {
+    width: 3rem;
+}
+
+.navbarMobileLogo {
+    display: none;
+}
+
 .navbarUserPic {
     width: 2.5rem;
     border-radius: 3rem;
@@ -30,4 +38,18 @@
 
 .navUserDetails {
     gap: 1rem;
+}
+
+@media (max-width: 600px) {
+    .navUserDetails img, p {
+        display: none;
+    }
+
+    .navbarLogo {
+        display: none;
+    }
+
+    .navbarMobileLogo {
+        display: initial;
+    }
 }

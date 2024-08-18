@@ -1,6 +1,7 @@
 import { Box } from '@mui/material'
 import React, { ReactElement, useEffect, useState } from 'react';
 import DataMavenAILogo from '../../../assets/data-maven-ai-logo.png';
+import DataMavenMobileLogo from '../../../assets/data-maven-mobile-logo.png'
 import css from './styles.module.css';
 import { UserService } from '../../../services/User/service';
 import { IUser } from '../../../services/User/data';
@@ -28,6 +29,7 @@ const Navbar = (props: IProps) => {
     return (
         <Box className={css.navbar}>
             <img className={css.navbarLogo} src={DataMavenAILogo} alt="data maven ai logo" />
+            <img className={css.navbarMobileLogo} src={DataMavenMobileLogo} alt="data maven mobile logo" />
             {
                 user &&
                 <Box className={css.navUserDetails}>

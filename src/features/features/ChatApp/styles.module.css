@@ -105,3 +105,13 @@
     flex-direction: row;
     gap: 5px;
 }
+
+@media (max-width: 600px) {
+    .chatContent {
+        width: 100%;
+    }
+
+    .inputPromptContainer {
+        width: 90%;
+    }
+}

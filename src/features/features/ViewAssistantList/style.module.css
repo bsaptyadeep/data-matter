@@ -21,3 +21,10 @@
 .addAssistantButton:hover {
     cursor: pointer;
 }
+
+
+@media (max-width: 600px) {
+    .viewAssistantListContainer {
+        padding: 2rem;
+    }
+}
