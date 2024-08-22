@@ -36,8 +36,10 @@ const Navbar = (props: IProps) => {
                     {
                         props.children
                     }
-                    <p>{user.name}</p>
-                    <img className={css.navbarUserPic} src={UserEmptyProfile} alt="user profile" />
+                        <Box className={`${css.navUserDetails} ${css.navUserNameImage}`}>
+                            <p>{user.name}</p>
+                            <img className={css.navbarUserPic} src={UserEmptyProfile} alt="user profile" />
+                        </Box>
                 </Box>
             }
         </Box>

@@ -47,7 +47,7 @@ const ViewAssistantList = () => {
                 {
                     assistantList.map((assistant) => {
                         return (
-                            <AssistantItem key={assistant._id}
+                            <AssistantItem assistantId={assistant._id}
                                 assistant={assistant}
                                 fetchAssistantList={fetchAssistantList} />
                         )

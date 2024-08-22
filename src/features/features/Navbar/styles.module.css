@@ -41,7 +41,7 @@
 }
 
 @media (max-width: 600px) {
-    .navUserDetails img, p {
+    .navUserNameImage {
         display: none;
     }
 

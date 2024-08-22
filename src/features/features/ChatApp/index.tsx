@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import css from './styles.module.css';
 import { Box, IconButton, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Icon from '../../../assets/icon.png';
+import Icon from '../../../assets/user-profile-pic.jpg';
 import Loader from '../../../assets/loader.json';
 import Lottie from 'lottie-react';
 import SendIcon from '@mui/icons-material/Send';
@@ -125,7 +125,7 @@ const ChatApp = () => {
                                 </Box>
                                 : */}
                         <Box className={css.sendBtnContent}>
-                            <Typography>
+                            <Typography className={css.sendButtonText} >
                                 Send
                             </Typography>
                             <SendIcon />

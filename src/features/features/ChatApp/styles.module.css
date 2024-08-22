@@ -86,6 +86,12 @@
     align-items: center;
     padding: 30px 40px;
     color: #ffffff;
+    border-radius: 2rem;
+}
+
+.userMessageBoxContainer img {
+    width: 2rem;
+    border-radius: 10rem;
 }
 
 .chatContent {
@@ -109,5 +115,9 @@
 @media (max-width: 600px) {
     .chatContent {
         width: 100%;
+    }
+
+    .sendButtonText {
+        display: none;
     }
 }

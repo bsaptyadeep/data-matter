@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { apiClient } from '../../../../utils/apiHandler';
 
 interface IProps {
-    key: string,
+    assistantId: string,
     assistant: IAssistant,
     fetchAssistantList: () => Promise<void>
 }
@@ -30,7 +30,7 @@ const AssistantItem = (props: IProps) => {
     }
 
     return (
-        <div key={props.key} className={css.assistantListItemContainer}>
+        <div key={props.assistantId} className={css.assistantListItemContainer}>
             <div
                 className={`${css.assistantListItem} ${css.addAssistantButton}`}>
                 <div className={css.assistantItemLeft}>
