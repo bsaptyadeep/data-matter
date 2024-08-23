@@ -83,8 +83,8 @@ const ChatApp = () => {
             <Box className={css.chatContentContainer}>
                 <Box className={css.chatContent}>
                     {
-                        chatContent.map((content) => (
-                            <Box className={css.userResponseContainer}>
+                        chatContent.map((content, index) => (
+                            <Box key={index} className={css.userResponseContainer}>
                                 <Box className={css.userMessageBoxContainer}>
                                     <img src={Icon} alt={"user-profile-pic"} />
                                     <Typography>{content.user}</Typography>

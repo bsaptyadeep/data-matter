@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { Box } from '@mui/material';
 import css from './styles.module.css';
@@ -47,6 +47,14 @@ function UserAuth() {
     const errorMessage = () => {
         console.log("Failed to login/Register using Google");
     };
+
+    useEffect(() => {
+        const access_token = localStorage.getItem("access_token")
+        if (access_token) {
+            navigate("/")
+        }
+    }, [navigate])
+
     return (
         <Box className={css.userAuth}>
             <Box className={css.userAuthContainer}>
