@@ -5,10 +5,13 @@ import { IAssistant } from '../../Data';
 import AssistantItem from './components/AssistantItem';
 import { apiClient } from '../../../utils/apiHandler';
 import Navbar from '../Navbar';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../app/store';
 
 const ViewAssistantList = () => {
     const navigate = useNavigate()
     const [assistantList, setAssistantList] = useState<IAssistant[]>([])
+    const { accessToken } = useSelector((state: RootState) => state.user);
 
     useEffect(() => {
         const access_token = localStorage.getItem("access_token")
@@ -16,6 +19,10 @@ const ViewAssistantList = () => {
             navigate("/auth")
         }
     }, [navigate])
+
+    useEffect(() => {
+        fetchAssistantList()
+    }, [])
 
     const fetchAssistantList = async () => {
         try {
@@ -28,9 +35,7 @@ const ViewAssistantList = () => {
         }
     }
 
-    useEffect(() => {
-        fetchAssistantList()
-    }, [])
+    console.log("testing~accessToken", accessToken)
 
     return (
         <>
@@ -47,7 +52,9 @@ const ViewAssistantList = () => {
                 {
                     assistantList.map((assistant) => {
                         return (
-                            <AssistantItem assistantId={assistant._id}
+                            <AssistantItem
+                             key={`key-${assistant._id}`}
+                             assistantId={assistant._id}
                                 assistant={assistant}
                                 fetchAssistantList={fetchAssistantList} />
                         )

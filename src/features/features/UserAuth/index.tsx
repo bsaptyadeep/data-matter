@@ -6,6 +6,9 @@ import Logo from '../../../assets/DataMatter_logo.jpeg';
 import axios from 'axios';
 import { GET_USER_GOOGLE_PROFILE_URL, SERVER_BASE_URL } from '../../../constants';
 import { useNavigate } from 'react-router-dom';
+import { AppDispatch, RootState } from '../../../app/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../../services/User/userSlice';
 interface IGoogleAuthResponse {
     credential: string,
     clientId: string,
@@ -14,6 +17,8 @@ interface IGoogleAuthResponse {
 
 function UserAuth() {
     const navigate = useNavigate()
+    const dispatch: AppDispatch = useDispatch();
+    const { accessToken } = useSelector((state: RootState) => state.user);
 
     const responseMessage = async (response: IGoogleAuthResponse | any) => {
         try {
@@ -49,11 +54,16 @@ function UserAuth() {
     };
 
     useEffect(() => {
-        const access_token = localStorage.getItem("access_token")
-        if (access_token) {
+        const access_token_local = localStorage.getItem('access_token');
+        if (accessToken) {
+            navigate("/")
+            localStorage.setItem('access_token', accessToken)
+        }
+        else if (access_token_local) {
+            dispatch(setUser({ accessToken: access_token_local }))
             navigate("/")
         }
-    }, [navigate])
+    }, [navigate, dispatch, accessToken])
 
     return (
         <Box className={css.userAuth}>

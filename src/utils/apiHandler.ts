@@ -10,10 +10,11 @@ interface ApiError {
     detail?: string
 }
 
-const access_token = localStorage.getItem('access_token');
 
 export const apiClient = async (method: string, endPoint: string, data: any) => {
     try {
+        const access_token = localStorage.getItem('access_token');
+
         const response = await axios({
             method,
             url: `${SERVER_BASE_URL}${endPoint}`,

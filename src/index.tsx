@@ -4,16 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { Provider } from 'react-redux';
+import store from './app/store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <GoogleOAuthProvider clientId='47666458874-u002m3vr65hblbsd6im0aorkqrio2hdu.apps.googleusercontent.com'>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </GoogleOAuthProvider>
+  <Provider store={store}>
+    <GoogleOAuthProvider clientId='47666458874-u002m3vr65hblbsd6im0aorkqrio2hdu.apps.googleusercontent.com'>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </GoogleOAuthProvider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

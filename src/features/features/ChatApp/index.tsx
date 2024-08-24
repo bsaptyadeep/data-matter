@@ -8,6 +8,8 @@ import Lottie from 'lottie-react';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 import { apiClient } from '../../../utils/apiHandler';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../app/store';
 
 interface IChatResponse {
     _id: string,
@@ -24,6 +26,7 @@ const ChatApp = () => {
     const [chatContent, setChatContent] = useState<IChatResponse[]>([])
     const search = window.location.search;
     const params = new URLSearchParams(search);
+    const { accessToken } = useSelector((state: RootState) => state.user);
     const [userMessage, setUserMessage] = useState<string>("")
     const [fetchingChatResponse, setFetchingChatResponse] = useState<boolean>(false)
     const assistantId: string = params.get("assistant_id") || ""
@@ -62,11 +65,10 @@ const ChatApp = () => {
     }
 
     useEffect(() => {
-        const access_token = localStorage.getItem("access_token")
-        if (!access_token) {
+        if (!accessToken) {
             navigate("/auth")
         }
-    }, [navigate])
+    }, [navigate, accessToken])
 
     return (
         <Box style={{ height: window.innerHeight }} className={css.chatAppContainer}>
