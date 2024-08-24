@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppDispatch, RootState } from '../../../app/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../../services/User/userSlice';
+import { UserService } from '../../../services/User/service';
 interface IGoogleAuthResponse {
     credential: string,
     clientId: string,
@@ -54,14 +55,29 @@ function UserAuth() {
     };
 
     useEffect(() => {
+        const isValidAccessToken = async (token: string) => {
+            try {
+                const data = await UserService.getUserData()
+                if (data) {
+                    dispatch(setUser({ accessToken: token }))
+                    navigate("/")
+                } else {
+                    localStorage.removeItem("access_token")
+                    navigate("/")
+                }
+            } catch (error) {
+                localStorage.removeItem("access_token")
+                navigate("/")
+            }
+        }
+
         const access_token_local = localStorage.getItem('access_token');
         if (accessToken) {
             navigate("/")
             localStorage.setItem('access_token', accessToken)
         }
         else if (access_token_local) {
-            dispatch(setUser({ accessToken: access_token_local }))
-            navigate("/")
+            isValidAccessToken(access_token_local)
         }
     }, [navigate, dispatch, accessToken])
 

@@ -1,4 +1,3 @@
-import Icon from './assets/icon.png';
 import './App.css';
 import AppRoute from './features/AppRoute';
 
