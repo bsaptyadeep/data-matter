@@ -18,7 +18,9 @@ const Navbar = (props: IProps) => {
         const fetchUserData = async () => {
             try {
                 const data = await UserService.getUserData()
-                setUser(data)
+                if(data.status === "SUCCESS") {
+                    setUser(data.data)
+                }
             } catch (error) {
                 alert(`Error in fetching User Details: ${error}`)
             }

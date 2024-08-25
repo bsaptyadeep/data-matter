@@ -58,23 +58,22 @@ function UserAuth() {
         const isValidAccessToken = async (token: string) => {
             try {
                 const data = await UserService.getUserData()
-                if (data) {
+                console.log("testing~error", data)
+                if (data.status === "SUCCESS") {
                     dispatch(setUser({ accessToken: token }))
                     navigate("/")
                 } else {
                     localStorage.removeItem("access_token")
-                    navigate("/")
                 }
             } catch (error) {
                 localStorage.removeItem("access_token")
-                navigate("/")
             }
         }
 
         const access_token_local = localStorage.getItem('access_token');
         if (accessToken) {
-            navigate("/")
             localStorage.setItem('access_token', accessToken)
+            navigate("/")
         }
         else if (access_token_local) {
             isValidAccessToken(access_token_local)

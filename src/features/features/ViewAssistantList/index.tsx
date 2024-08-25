@@ -14,11 +14,10 @@ const ViewAssistantList = () => {
     const { accessToken } = useSelector((state: RootState) => state.user);
 
     useEffect(() => {
-        const access_token = localStorage.getItem("access_token")
-        if (!access_token) {
+        if (!accessToken) {
             navigate("/auth")
         }
-    }, [navigate])
+    }, [navigate, accessToken])
 
     useEffect(() => {
         fetchAssistantList()
@@ -27,8 +26,10 @@ const ViewAssistantList = () => {
     const fetchAssistantList = async () => {
         try {
             const apiResponse = await apiClient("GET", "/assistant", {})
-            if (apiResponse.assistant?.length > 0) {
-                setAssistantList([...apiResponse.assistant])
+            if(apiResponse.status==="SUCCESS") {
+                if (apiResponse.data.assistant?.length > 0) {
+                    setAssistantList([...apiResponse.data.assistant])
+                }
             }
         } catch (error) {
 
@@ -53,8 +54,8 @@ const ViewAssistantList = () => {
                     assistantList.map((assistant) => {
                         return (
                             <AssistantItem
-                             key={`key-${assistant._id}`}
-                             assistantId={assistant._id}
+                                key={`key-${assistant._id}`}
+                                assistantId={assistant._id}
                                 assistant={assistant}
                                 fetchAssistantList={fetchAssistantList} />
                         )

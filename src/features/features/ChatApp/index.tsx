@@ -47,15 +47,17 @@ const ChatApp = () => {
             setQueryQuestionGettingProcess(userMessage)
             setUserMessage("")
             const apiResponse = await apiClient("POST", `/respond_query?assistant_id=${assistantId}&query=${userMessage}`, {})
-            setChatContent(prevState => {
-                return [
-                    ...prevState,
-                    {
-                        _id: `id-${prevState.length}`,
-                        ...apiResponse.chat_content
-                    }
-                ]
-            })
+            if(apiResponse.status === "SUCCESS") {
+                setChatContent(prevState => {
+                    return [
+                        ...prevState,
+                        {
+                            _id: `id-${prevState.length}`,
+                            ...apiResponse.data.chat_content
+                        }
+                    ]
+                })
+            }
             setQueryQuestionGettingProcess("")
         } catch (error) {
             alert(error)

@@ -82,9 +82,9 @@ const AddAssistant = () => {
         database_type: addAssistantFormData.databaseType
       }
       const apiResponse = await apiClient("POST", "/assistant", reqBody)
-      if (apiResponse?.id) {
-        updateQueryParam("assistant-id", apiResponse.id)
-        setAssistantId(apiResponse.id)
+      if (apiResponse.status === "SUCCESS" && apiResponse?.data.id) {
+        updateQueryParam("assistant-id", apiResponse.data.id)
+        setAssistantId(apiResponse.data.id)
       }
       else {
         setError("Invalid Connection String, Try Again")
@@ -136,9 +136,9 @@ const AddAssistant = () => {
           `/assistant/table?id=${assistantId}`,
           {}
         )
-        if (apiResponse.tables) {
+        if (apiResponse.status === "SUCCESS" && apiResponse.data.tables) {
           const tablesArray: ITable[] = []
-          const tableNames: string[] = apiResponse.tables
+          const tableNames: string[] = apiResponse.data.tables
           tableNames.forEach((tableName: string) => {
             tablesArray.push({
               name: tableName,

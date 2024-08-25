@@ -24,7 +24,10 @@ export const apiClient = async (method: string, endPoint: string, data: any) => 
                 "x-custom-header": "custom"
             }
         })
-        return response.data
+        return {
+            status: "SUCCESS",
+            data: response.data
+        }
     } catch (error) {
         if (axios.isAxiosError(error)) {
             // Handle AxiosError
@@ -32,7 +35,10 @@ export const apiClient = async (method: string, endPoint: string, data: any) => 
                 message: error.message,
                 detail: error.response?.data.detail
             };
-            return apiError;
+            return {
+                status: "ERROR",
+                data: apiError
+            };
         } else {
             // Handle other types of errors
             console.error('Unexpected error:', error);
