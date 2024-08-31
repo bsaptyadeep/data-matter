@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import css from './styles.module.css';
 import Logo from '../../../assets/DataMatter_logo.jpeg';
 import axios from 'axios';
@@ -20,6 +20,7 @@ function UserAuth() {
     const navigate = useNavigate()
     const dispatch: AppDispatch = useDispatch();
     const { accessToken } = useSelector((state: RootState) => state.user);
+    const [loggingIn, setLoggingIn] = useState<boolean>(false);
 
     const responseMessage = async (response: IGoogleAuthResponse | any) => {
         try {
@@ -38,6 +39,7 @@ function UserAuth() {
     };
 
     const handleLogin = async (payload: any) => {
+        setLoggingIn(true)
         try {
             const { data } = await axios.post(`${SERVER_BASE_URL}/user/login`, payload)
             if (data.access_token) {
@@ -47,6 +49,8 @@ function UserAuth() {
 
         } catch (error) {
 
+        } finally {
+            setLoggingIn(false)
         }
     }
 
@@ -56,9 +60,9 @@ function UserAuth() {
 
     useEffect(() => {
         const isValidAccessToken = async (token: string) => {
+            setLoggingIn(true)
             try {
                 const data = await UserService.getUserData()
-                console.log("testing~error", data)
                 if (data.status === "SUCCESS") {
                     dispatch(setUser({ accessToken: token }))
                     navigate("/")
@@ -67,6 +71,8 @@ function UserAuth() {
                 }
             } catch (error) {
                 localStorage.removeItem("access_token")
+            } finally {
+                setLoggingIn(false)
             }
         }
 
@@ -88,7 +94,11 @@ function UserAuth() {
                 <p>Login/Register using Google</p>
                 <br />
                 <br />
-                <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+                {
+                    loggingIn ?
+                        <CircularProgress style={{ color: "white" }} />
+                        :
+                        <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />}
             </Box>
         </Box>
     )
