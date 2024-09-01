@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import css from './styles.module.css';
 import { Box, IconButton, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Icon from '../../../assets/user-profile-pic.jpg';
+import ProfileIcon from '../../../assets/user-profile-pic.jpg';
+import Logo from '../../../assets/DataMatter_logo.jpeg';
 import Loader from '../../../assets/loader.json';
 import Lottie from 'lottie-react';
 import SendIcon from '@mui/icons-material/Send';
@@ -10,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { apiClient } from '../../../utils/apiHandler';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
+import AutoScrollBottom from '../../../utils/components/AutoScrollBottom/index';
 
 interface IChatResponse {
     _id: string,
@@ -17,7 +19,6 @@ interface IChatResponse {
     response?: {
         response: string,
         sql_query: string,
-        // result: string
     }
 }
 
@@ -33,6 +34,12 @@ const ChatApp = () => {
     const [queryQuestionGettingProcess, setQueryQuestionGettingProcess] = useState<string>("")
     const navigate = useNavigate()
 
+    useEffect(() => {
+        if (!accessToken) {
+            navigate("/auth")
+        }
+    }, [navigate, accessToken])
+
     const handleToggleNavigationPanelExpand = () => {
         setIsNavigationPanelExpanded(prevState => !prevState)
     }
@@ -42,12 +49,13 @@ const ChatApp = () => {
     }
 
     const handleGetChatResponse = async () => {
+        if (!userMessage) return;
         try {
             setFetchingChatResponse(true)
             setQueryQuestionGettingProcess(userMessage)
             setUserMessage("")
             const apiResponse = await apiClient("POST", `/respond_query?assistant_id=${assistantId}&query=${userMessage}`, {})
-            if(apiResponse.status === "SUCCESS") {
+            if (apiResponse.status === "SUCCESS") {
                 setChatContent(prevState => {
                     return [
                         ...prevState,
@@ -66,11 +74,11 @@ const ChatApp = () => {
         }
     }
 
-    useEffect(() => {
-        if (!accessToken) {
-            navigate("/auth")
+    const handleEnterPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (event.key === 'Enter') {
+            handleGetChatResponse()
         }
-    }, [navigate, accessToken])
+    }
 
     return (
         <Box style={{ height: window.innerHeight }} className={css.chatAppContainer}>
@@ -85,60 +93,53 @@ const ChatApp = () => {
                 </Box>
             </Box>
             <Box className={css.chatContentContainer}>
-                <Box className={css.chatContent}>
-                    {
-                        chatContent.map((content, index) => (
-                            <Box key={index} className={css.userResponseContainer}>
-                                <Box className={css.userMessageBoxContainer}>
-                                    <img src={Icon} alt={"user-profile-pic"} />
-                                    <Typography>{content.user}</Typography>
+                <AutoScrollBottom>
+                    <Box className={css.chatContent}>
+                        {
+                            chatContent.map((content, index) => (
+                                <Box key={index} className={css.userResponseContainer}>
+                                    <Box className={css.userMessageBoxContainer}>
+                                        <img src={ProfileIcon} alt={"user-profile-pic"} />
+                                        <Typography>{content.user}</Typography>
+                                    </Box>
+                                    <Box className={css.userMessageBoxContainer}>
+                                        <img src={Logo} alt={"user-profile-pic"} />
+                                        <Typography>{content.response?.response}</Typography>
+                                    </Box>
                                 </Box>
-                                <Box className={css.userMessageBoxContainer}>
-                                    <img src={Icon} alt={"user-profile-pic"} />
-                                    <Typography>{content.response?.response}</Typography>
-                                </Box>
+                            ))
+                        }
+                        {queryQuestionGettingProcess && <Box className={css.userMessageBoxContainer}>
+                            <img src={ProfileIcon} alt={"user-profile-pic"} />
+                            <Typography>{queryQuestionGettingProcess}</Typography>
+                        </Box>}
+                        {
+                            fetchingChatResponse &&
+                            <Box className={css.loaderContainer}>
+                                <Lottie animationData={Loader} />
                             </Box>
-                        ))
-                    }
-                    {queryQuestionGettingProcess && <Box className={css.userMessageBoxContainer}>
-                        <img src={Icon} alt={"user-profile-pic"} />
-                        <Typography>{queryQuestionGettingProcess}</Typography>
-                    </Box>}
-                    {
-                        fetchingChatResponse &&
-                        <Box className={css.loaderContainer}>
-                            <Lottie animationData={Loader} />
-                        </Box>
-                    }
-                </Box>
+                        }
+                    </Box>
+                </AutoScrollBottom>
                 <Box className={css.inputPromptContainer}>
                     <textarea
                         value={userMessage}
                         onChange={handleChangeUserMessage}
+                        onKeyDown={handleEnterPress}
                         rows={3} />
                     <button className={css.sendPromptButton}
                         onClick={handleGetChatResponse}
                     >
-                        {/* {
-                            fetchingChatResponse ?
-                                <Box className={css.sendBtnContent}>
-                                    <Typography>
-                                        Stop
-                                    </Typography>
-                                    <StopCircleIcon />
-                                </Box>
-                                : */}
                         <Box className={css.sendBtnContent}>
                             <Typography className={css.sendButtonText} >
                                 Send
                             </Typography>
                             <SendIcon />
                         </Box>
-                        {/* } */}
                     </button>
                 </Box>
             </Box>
-        </Box>
+        </Box >
     )
 }
 

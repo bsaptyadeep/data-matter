@@ -97,7 +97,7 @@
 .chatContent {
     flex: 1;
     width: 70%;
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 
 .loaderContainer {
