@@ -26,7 +26,7 @@ const ViewAssistantList = () => {
     const fetchAssistantList = async () => {
         try {
             const apiResponse = await apiClient("GET", "/assistant", {})
-            if(apiResponse.status==="SUCCESS") {
+            if (apiResponse.status === "SUCCESS") {
                 if (apiResponse.data.assistant?.length > 0) {
                     setAssistantList([...apiResponse.data.assistant])
                 }
@@ -35,8 +35,6 @@ const ViewAssistantList = () => {
 
         }
     }
-
-    console.log("testing~accessToken", accessToken)
 
     return (
         <>
