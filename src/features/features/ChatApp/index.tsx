@@ -12,6 +12,7 @@ import { apiClient } from '../../../utils/apiHandler';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
 import AutoScrollBottom from '../../../utils/components/AutoScrollBottom/index';
+import { v4 as uuidv4 } from 'uuid';
 
 interface IChatResponse {
     _id: string,
@@ -35,10 +36,34 @@ const ChatApp = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
+        const getChatHistory = async () => {
+            try {
+                const apiResponse = await apiClient("GET", `/chat/?assistant_id=${assistantId}`, {})
+                if (apiResponse.status === "SUCCESS") {
+                    setChatContent(apiResponse.data.chat_history.chats.map((chat: { user: any; bot: any; sql_query: any; }) => {
+                        return {
+                            _id: uuidv4(),
+                            user: chat.user,
+                            response: {
+                                response: chat.bot,
+                                sql_query: chat.sql_query,
+                            }
+                        }
+                    }))
+                } else {
+                    // TODO: error alert
+                }
+            } catch (error) {
+                // TODO: error alert
+            }
+        }
+        if (assistantId) {
+            getChatHistory()
+        }
         if (!accessToken) {
             navigate("/auth")
         }
-    }, [navigate, accessToken])
+    }, [navigate, accessToken, assistantId])
 
     const handleToggleNavigationPanelExpand = () => {
         setIsNavigationPanelExpanded(prevState => !prevState)
@@ -54,7 +79,7 @@ const ChatApp = () => {
             setFetchingChatResponse(true)
             setQueryQuestionGettingProcess(userMessage)
             setUserMessage("")
-            const apiResponse = await apiClient("POST", `/respond_query?assistant_id=${assistantId}&query=${userMessage}`, {})
+            const apiResponse = await apiClient("POST", `/chat/get-response?assistant_id=${assistantId}&query=${userMessage}`, {})
             if (apiResponse.status === "SUCCESS") {
                 setChatContent(prevState => {
                     return [
